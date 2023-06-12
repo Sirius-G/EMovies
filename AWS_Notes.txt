@@ -1,0 +1,6 @@
+Master username - SiriusG
+
+DB instances identifier - elevationmovies
+
+DB port - 3306
+
