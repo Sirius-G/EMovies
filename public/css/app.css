@@ -183,12 +183,12 @@ body {
     
     .carousel2 .carousel-inner .carousel-item-end.active,
     .carousel2 .carousel-inner .carousel-item-next {
-    transform: translateX(50%);
+    transform: translateX(100%);
     }
     
     .carousel2 .carousel-inner .carousel-item-start.active, 
     .carousel2 .carousel-inner .carousel-item-prev {
-    transform: translateX(-50%);
+    transform: translateX(-100%);
     }
 }
 
@@ -233,5 +233,12 @@ transform: translateX(0);
 
 .carousel2 .carousel-inner .carousel-item {
     border: 0 !important;
+}
+
+.message_bar {
+    position: absolute;
+    top: 55px;
+    left: 400px;
+    z-index: 999;
 }
 

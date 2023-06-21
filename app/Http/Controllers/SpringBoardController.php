@@ -26,14 +26,21 @@ class SpringBoardController extends Controller
     }
 
     public function index(){
+        //TODO add a join for writers and producers
         $billboard = Feature::where('billboard', 1)
+                            ->select('casts.*', 'genres.*', 'certificates.*', 'directors.*', 'features.*', 'features.id as fid')
                             ->leftjoin('casts', 'features.id', 'casts.feature_id')
                             ->leftjoin('feature_types', 'features.feature_type_id', 'feature_types.id')
                             ->leftjoin('genres', 'features.genre_id', 'genres.id')
                             ->leftjoin('certificates', 'features.certificate_id', 'certificates.id')
                             ->leftjoin('directors', 'features.id', 'directors.feature_id')
                             ->get();
+
+        //add a specific select to join to ensure id is derived from features***********
+        
+        //TODO add a join for writers and producers
         $thumbs = Feature::leftjoin('casts', 'features.id', 'casts.feature_id')
+                            ->select('casts.*', 'genres.*', 'certificates.*', 'directors.*', 'features.*', 'features.id as fid')
                             ->leftjoin('feature_types', 'features.feature_type_id', 'feature_types.id')
                             ->leftjoin('genres', 'features.genre_id', 'genres.id')
                             ->leftjoin('certificates', 'features.certificate_id', 'certificates.id')
@@ -60,7 +67,10 @@ class SpringBoardController extends Controller
     public function moreInfo(Request $request, $id){
 
         //$details = Feature::where('id', $id)->get();
+
+        //TODO add a join for writers and producers
         $details = Feature::leftjoin('casts', 'features.id', 'casts.feature_id')
+        ->select('casts.*', 'genres.*', 'certificates.*', 'directors.*', 'features.*', 'features.id as fid')
         ->leftjoin('feature_types', 'features.feature_type_id', 'feature_types.id')
         ->leftjoin('genres', 'features.genre_id', 'genres.id')
         ->leftjoin('certificates', 'features.certificate_id', 'certificates.id')
@@ -69,8 +79,9 @@ class SpringBoardController extends Controller
         ->get();
 
         //return $details;
-
+        //TODO add a join for writers and producers
         $thumbs = Feature::leftjoin('casts', 'features.id', 'casts.feature_id')
+        ->select('casts.*', 'genres.*', 'certificates.*', 'directors.*', 'features.*', 'features.id as fid')
         ->leftjoin('feature_types', 'features.feature_type_id', 'feature_types.id')
         ->leftjoin('genres', 'features.genre_id', 'genres.id')
         ->leftjoin('certificates', 'features.certificate_id', 'certificates.id')

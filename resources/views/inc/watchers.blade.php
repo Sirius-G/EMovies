@@ -8,9 +8,9 @@
                 @if(count($thumbs)>0)
                 @foreach($thumbs as $t)
                     <div class="carousel-item @if($loop->first) active @endif" style="border: solid #333 2px;">
-                        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+                        <div class="col-12 col-sm-12 col-md-3 col-lg-2">
                             <div class="card feature_card">
-                                <a href="/more_info/{{$t->id}}" title="{{$t->title}}" alt="{{$t->title}}">
+                                <a href="/more_info/{{$t->id}}" title="{{$t->title}} {{$t->id}}" alt="{{$t->title}}">
                                     <div class="card-img">
                                         <img src="{{asset('assets/thumbnails/'.$t->thumbnail)}}" class="card-img-top" alt="{{$t->title}}">
                                     </div>

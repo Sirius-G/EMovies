@@ -3,15 +3,15 @@
     @if(count($billboard)>0)
     @foreach($billboard as $b)
       @php $c_image = 'assets/posters/'.$b->poster; @endphp
-      <div class="carousel-item @if($loop->first) active @endif">
-          <img src="{{$c_image}}" class="d-block w-100" alt="{{$b->title}}">
+      <div class="carousel-item @if($loop->first) active @endif"  style="min-height: 500px !important; background: rgba(255,255,255,0.05);">
+          <img src="{{$c_image}}" class="d-block w-100 mt-1" alt="{{$b->title}}">
         <div class="carousel-caption billboard_caption">
         <span class="feature"><img src="{{asset('images/emw.png')}}"> {{$b->feature_type}}</span>
-          <h1>{{$b->title}}</h1>
+          <h1 style="font-size: calc(2.5 * (1.5vw + 1.1vh));">{{$b->title}}</h1>
           <p>{{$b->sub_title}}</p>
           <br>
-              <a href="{{route('play', $b->id)}}" class="btn btn-primary btn-lg" style="width: 150px;"> <i class="fa fa-play fa-lg"></i> Play </a>
-              <a href="#" class="btn btn-secondary btn-lg" style="width: 180px;" data-bs-toggle="modal" data-bs-target="#more-info" onclick="showInfo(`{{$b->title}}`,`{{$b->sub_title}}`, `{{$b->long_description}}`, `{{$b->cast_names}}`, `{{$b->certificate}}`, `{{$b->certificate_reasons}}`, `{{$b->director_names}}`)"> <i class="fa fa-info-circle fa-lg" ></i> More Info... </a>
+              <a href="{{route('play', $b->id)}}" class="btn btn-primary btn-lg mt-2" style="width: 150px;"> <i class="fa fa-play fa-lg"></i> Play </a>
+              <a href="#" class="btn btn-secondary btn-lg mt-2" style="width: 180px;" data-bs-toggle="modal" data-bs-target="#more-info" onclick="showInfo(`{{$b->title}}`,`{{$b->sub_title}}`, `{{$b->long_description}}`, `{{$b->cast_names}}`, `{{$b->certificate}}`, `{{$b->certificate_reasons}}`, `{{$b->director_names}}`)"> <i class="fa fa-info-circle fa-lg" ></i> More Info... </a>
         </div>
       </div>
     @endforeach

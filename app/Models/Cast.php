@@ -11,7 +11,7 @@ class Cast extends Model
     use SoftDeletes;
     
     //Table Name
-    protected $table = 'cast';
+    protected $table = 'casts';
     //Primary Key
     public $primaryKey = 'id';
     //Timestamps

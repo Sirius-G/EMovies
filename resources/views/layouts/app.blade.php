@@ -16,6 +16,7 @@
 </head>
 <body style="background-color: #333;">
     @include('inc.navbar')
+    @include('inc.messages')
     @yield('content')
 
     <br><br>

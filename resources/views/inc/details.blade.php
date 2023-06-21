@@ -1,6 +1,6 @@
 @if(count($details)>0)
   @foreach($details as $d)   
-    <div class="col col-sm-12 col-md-4 p-4 text-white" style="border-right: 2px #fff solid; padding: 40px;"">
+    <div class="col-12 col-sm-12 col-md-4 p-4 text-white" style="border-right: 2px #fff solid; padding: 40px;"">
       <span class="feature"><img src="{{asset('images/emw.png')}}"> {{$d->feature_type}}</span>
       <h2>{{$d->title}}</h2>
       <br>
@@ -12,7 +12,7 @@
       <br><hr>Cast: {{$d->cast_names}}<br><hr>
       <br><span class="pull-right mx-4">Director(s): {{$d->director_names}}</span>
     </div>                       
-    <div class="col col-sm-12 col-md-8 p-4 text-white">
+    <div class="col-12 col-sm-12 col-md-8 p-4 text-white">
         <img src="{{asset('assets/posters/'.$d->poster)}}" class="d-block w-100" alt="{{$d->title}}">
         <hr><br>This feature has a certificate of {{$d->certificate}}
         <br>The feature contains {{$d->certificate_reasons}}
