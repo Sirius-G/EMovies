@@ -35,6 +35,11 @@
 
       </ul>
       @else 
+        @if(Auth()->User()->id < 4)
+          <li class="nav-link">
+                  <a class="nav-link" href="/admin" tabindex="-1">Admin Panel</a>
+            </li>
+        @endif
         <li class="nav-link">
             <a href="{{ route('logout') }}"  alt="Logout of Elevation Movies"
                 onclick="event.preventDefault();

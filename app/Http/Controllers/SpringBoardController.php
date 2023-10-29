@@ -12,6 +12,7 @@ use App\Models\Feature;
 use App\Models\FeatureTypes;
 use App\Models\Genre;
 use App\Models\Producers;
+use App\Models\Tracker;
 
 
 class SpringBoardController extends Controller
@@ -28,27 +29,18 @@ class SpringBoardController extends Controller
     public function index(){
         //TODO add a join for writers and producers
         $billboard = Feature::where('billboard', 1)
-                            ->select('casts.*', 'genres.*', 'certificates.*', 'directors.*', 'features.*', 'features.id as fid')
+                            ->select('casts.*', 'genres.*', 'certificates.*', 'directors.*', 'feature_types.*', 'features.*', 'features.id as fid')
                             ->leftjoin('casts', 'features.id', 'casts.feature_id')
                             ->leftjoin('feature_types', 'features.feature_type_id', 'feature_types.id')
                             ->leftjoin('genres', 'features.genre_id', 'genres.id')
                             ->leftjoin('certificates', 'features.certificate_id', 'certificates.id')
                             ->leftjoin('directors', 'features.id', 'directors.feature_id')
+                            ->orderby('features.id', 'asc')
                             ->get();
 
-        //add a specific select to join to ensure id is derived from features***********
-        
-        //TODO add a join for writers and producers
-        $thumbs = Feature::leftjoin('casts', 'features.id', 'casts.feature_id')
-                            ->select('casts.*', 'genres.*', 'certificates.*', 'directors.*', 'features.*', 'features.id as fid')
-                            ->leftjoin('feature_types', 'features.feature_type_id', 'feature_types.id')
-                            ->leftjoin('genres', 'features.genre_id', 'genres.id')
-                            ->leftjoin('certificates', 'features.certificate_id', 'certificates.id')
-                            ->leftjoin('directors', 'features.id', 'directors.feature_id')
-                            ->where('active', 1)
-                            ->get();
+        $genres = Genre::get();
 
-        return view('home')->with('billboard', $billboard)->with('thumbs', $thumbs);
+        return view('home')->with('billboard', $billboard)->with('genres', $genres);
     }
 
     public function playView(Request $request, $id){
@@ -64,13 +56,20 @@ class SpringBoardController extends Controller
         return view('play')->with('current_video', $current_video);
     }
 
+    public function playtrailer(Request $request, $id){
+
+        $current_video = Feature::where('id', $id)->get();
+
+        return view('playtrailer')->with('current_video', $current_video);
+    }
+
     public function moreInfo(Request $request, $id){
 
         //$details = Feature::where('id', $id)->get();
 
         //TODO add a join for writers and producers
         $details = Feature::leftjoin('casts', 'features.id', 'casts.feature_id')
-        ->select('casts.*', 'genres.*', 'certificates.*', 'directors.*', 'features.*', 'features.id as fid')
+        ->select('casts.*', 'genres.*', 'certificates.*', 'directors.*', 'feature_types.*', 'features.*', 'features.id as fid')
         ->leftjoin('feature_types', 'features.feature_type_id', 'feature_types.id')
         ->leftjoin('genres', 'features.genre_id', 'genres.id')
         ->leftjoin('certificates', 'features.certificate_id', 'certificates.id')
@@ -81,14 +80,86 @@ class SpringBoardController extends Controller
         //return $details;
         //TODO add a join for writers and producers
         $thumbs = Feature::leftjoin('casts', 'features.id', 'casts.feature_id')
-        ->select('casts.*', 'genres.*', 'certificates.*', 'directors.*', 'features.*', 'features.id as fid')
+        ->select('casts.*', 'genres.*', 'certificates.*', 'directors.*', 'feature_types.*', 'features.*', 'features.id as fid')
         ->leftjoin('feature_types', 'features.feature_type_id', 'feature_types.id')
         ->leftjoin('genres', 'features.genre_id', 'genres.id')
         ->leftjoin('certificates', 'features.certificate_id', 'certificates.id')
         ->leftjoin('directors', 'features.id', 'directors.feature_id')
         ->where('active', 1)
+        ->orderby('features.id', 'asc')
         ->get();
 
-        return view('more_info')->with('details', $details)->with('thumbs', $thumbs);
+        $series_thumbs = Feature::leftjoin('casts', 'features.id', 'casts.feature_id')
+        ->select('casts.*', 'genres.*', 'certificates.*', 'directors.*', 'feature_types.*', 'features.*', 'features.id as fid')
+        ->leftjoin('feature_types', 'features.feature_type_id', 'feature_types.id')
+        ->leftjoin('genres', 'features.genre_id', 'genres.id')
+        ->leftjoin('certificates', 'features.certificate_id', 'certificates.id')
+        ->leftjoin('directors', 'features.id', 'directors.feature_id')
+        ->where('active', 1)
+        ->orderby('features.id', 'asc')
+        ->get();
+
+
+
+        //Get series ID number
+        $series_id = Feature::where('id', $id)->pluck('series_id');
+        if($series_id[0] > 0){
+            $fid = Feature::where('series_id', $series_id[0])->pluck('id');
+            $fid = $fid[0];
+        } else {
+            $fid = 0;
+        }
+
+        return view('more_info')->with('details', $details)->with('thumbs', $thumbs)->with('fid', $fid);
     }
+
+    public function watchers(){
+        $thumbs = Feature::leftjoin('casts', 'features.id', 'casts.feature_id')
+        ->select('casts.*', 'genres.*', 'certificates.*', 'directors.*', 'feature_types.*', 'features.*', 'features.id as fid')
+        ->leftjoin('feature_types', 'features.feature_type_id', 'feature_types.id')
+        ->leftjoin('genres', 'features.genre_id', 'genres.id')
+        ->leftjoin('certificates', 'features.certificate_id', 'certificates.id')
+        ->leftjoin('directors', 'features.id', 'directors.feature_id')
+        ->where('active', 1)
+        ->orderby('features.id', 'asc')
+        ->get();
+
+        return view('thumbs_watchers')->with('thumbs', $thumbs);
+    }
+
+    public function thumbnails($id){
+        $thumbnails = Feature::leftjoin('casts', 'features.id', 'casts.feature_id')
+        ->select('casts.*', 'genres.*', 'certificates.*', 'directors.*', 'feature_types.*', 'features.*', 'features.id as fid')
+        ->leftjoin('feature_types', 'features.feature_type_id', 'feature_types.id')
+        ->leftjoin('genres', 'features.genre_id', 'genres.id')
+        ->leftjoin('certificates', 'features.certificate_id', 'certificates.id')
+        ->leftjoin('directors', 'features.id', 'directors.feature_id')
+        ->where('active', 1)
+        ->where('genre_id', $id)
+        ->orderby('features.id', 'asc')
+        ->groupby('features.title')
+        ->get();
+
+        return view('thumbnails')->with('thumbnails', $thumbnails);
+    }
+
+    public function thumbnails_series($id){
+        //Get series ID number
+        $series_id = Feature::where('id', $id)->pluck('series_id');
+
+
+        $series_thumbs = Feature::leftjoin('casts', 'features.id', 'casts.feature_id')
+        ->select('casts.*', 'genres.*', 'certificates.*', 'directors.*', 'feature_types.*', 'features.*', 'features.id as fid')
+        ->leftjoin('feature_types', 'features.feature_type_id', 'feature_types.id')
+        ->leftjoin('genres', 'features.genre_id', 'genres.id')
+        ->leftjoin('certificates', 'features.certificate_id', 'certificates.id')
+        ->leftjoin('directors', 'features.id', 'directors.feature_id')
+        ->where('active', 1)
+        ->where('series_id', $series_id[0])
+        ->orderby('features.id', 'asc')
+        ->get();
+
+        return view('thumbnails_series')->with('series_thumbs', $series_thumbs);
+    }
+
 }

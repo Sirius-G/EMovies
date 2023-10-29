@@ -5,6 +5,9 @@
       <h2>{{$d->title}}</h2>
       <br>
       <a href="{{route('play', $d->id)}}" class="btn btn-primary btn-lg" style="width: 150px;"> <i class="fa fa-play fa-lg"></i> Play </a>
+      @if($d->trailer)
+        <a href="{{route('playtrailer', $d->id)}}" class="btn btn-secondary btn-lg mx-2" style="width: 180px;"> <i class="fa fa-eye fa-lg"></i> Watch Trailer </a>
+      @endif
       <br><br>
       <h4 class="modal-title fs-6"><i class="fa fa-info fa-lg"></i> More Information</h4>
       <h5>{{$d->sub_title}}</h5>

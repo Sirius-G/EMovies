@@ -1,16 +1,16 @@
 
     <div class="row mx-auto my-auto justify-content-center">
-        <div id="watchers" class="carousel2 slide" data-bs-touch="false" data-bs-interval="false">
+        <div id="thumbnails" class="carousel2 slide" data-bs-touch="false" data-bs-interval="false">
             <div class="carousel-inner" role="listbox">
-                @if(count($thumbs)>0)
+                @if(count($thumbnails)>0)
                 <div style="position: absolute; bottom: 0px; left: 50%; width: 200px; text-align: center; color: #fff; font-weight: bold; margin-left: -100px; padding: 3px; background-color: #000; border: #333 solid 1px; z-index: 99;">
-                    Features added: {{count($thumbs)}}
+                    Features added: {{count($thumbnails)}}
                 </div>
-                @foreach($thumbs as $t)
+                @foreach($thumbnails as $t)
                     <div class="carousel-item @if($loop->first) active @endif" style="border: solid #333 2px;">
                         <div class="col-6 col-xs-6 col-sm-4 col-md-3 col-lg-2">
-                            <div class="card feature_card">
-                                <a href="/more_info/{{$t->id}}" target="parent" title="{{$t->title}} {{$t->id}}" alt="{{$t->title}}">
+                            <div class="card feature_card" id="currentCard_{{$t->id}}">
+                                <a href="/more_info/{{$t->id}}"  target="parent" title="{{$t->title}} {{$t->id}}" alt="{{$t->title}}">
                                     <div class="card-img">
                                         <img src="{{asset('assets/thumbnails/'.$t->thumbnail)}}" class="card-img-top" alt="{{$t->title}}">
                                     </div>
@@ -27,10 +27,10 @@
             </div>     
                
             <div class="col-12 d-flex justify-content-between bt_top">
-                <a class="btn btn-primary" class="carousel-control-prev" onclick="advance()" role="button" data-bs-target="#watchers" data-bs-slide="prev">
+                <a class="btn btn-primary" class="carousel-control-prev" onclick="advance()" role="button" data-bs-target="#drama" data-bs-slide="prev">
                     <i class="fa fa-arrow-left"></i>
                 </a>
-                <a class="btn btn-primary" class="carousel-control-next" onclick="back()" role="button" data-bs-target="#watchers" data-bs-slide="next">
+                <a class="btn btn-primary" class="carousel-control-next" onclick="back()" role="button" data-bs-target="#drama" data-bs-slide="next">
                     <i class="fa fa-arrow-right"></i>
                 </a>
             </div>
@@ -57,11 +57,13 @@ items.forEach((el) => {
 })
 
 function advance(){
-    $("#watchers").carousel('prev');
+    $("#thumbnails").carousel('prev');
+    //$("#currentCard_"+c).addClass("highlight");
 }
 
 function back(){
-    $("#watchers").carousel('next');
+    $("#thumbnails").carousel('next');
+    //$("#currentCard").addClass("highlight");
 }
 
 </script>

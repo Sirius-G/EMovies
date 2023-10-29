@@ -13,6 +13,8 @@
             <a href="{{route('create')}}" class="btn btn-primary" alt="" title="">Upload a new feature</a>
         @endif
         <br><br>
+            <a href="{{route('show_all')}}" class="btn btn-primary" alt="" title="">View all records</a>
+		<br><br>
         <a href="/" class="btn btn-primary" alt="" title="">Back to user area</a>
         <br><br>
     </div>

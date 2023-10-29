@@ -12,6 +12,9 @@
           <br>
               <a href="{{route('play', $b->id)}}" class="btn btn-primary btn-lg mt-2" style="width: 150px;"> <i class="fa fa-play fa-lg"></i> Play </a>
               <a href="#" class="btn btn-secondary btn-lg mt-2" style="width: 180px;" data-bs-toggle="modal" data-bs-target="#more-info" onclick="showInfo(`{{$b->title}}`,`{{$b->sub_title}}`, `{{$b->long_description}}`, `{{$b->cast_names}}`, `{{$b->certificate}}`, `{{$b->certificate_reasons}}`, `{{$b->director_names}}`)"> <i class="fa fa-info-circle fa-lg" ></i> More Info... </a>
+              @if($b->trailer)
+                <a href="{{route('playtrailer', $b->id)}}" class="btn btn-secondary btn-lg mt-2" style="width: 180px;"> <i class="fa fa-eye fa-lg"></i> Watch Trailer </a>
+              @endif
         </div>
       </div>
     @endforeach

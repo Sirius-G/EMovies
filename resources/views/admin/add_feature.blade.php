@@ -108,9 +108,41 @@
                 </div>
             </div>
 
+
+
+            <div class="col-sm-12"><hr></div>
+
+
+
+            <!-- STEP 2 - Add a trailer from an external source(non-compulsory) -->
+            <div class="col-12 col-sm-12 mt-4">
+                <div class="card p-4" style="background: #eee;">
+                    <h3 class="p-4">Step 2 - add a trailer from an external source</h3>
+                    <form action="{{route('store.s2e')}}" method="post" id="trailer_form" enctype="multipart/form-data">
+                        @csrf
+                        <div class="row p-4">
+                            <div class="col-sm-12 col-md-6">
+                                <button type="submit" class="btn btn-primary p-4">
+                                    <i class="fa fa-arrow-right fa-lg"></i> <b>Skip to step 3</b>
+                                </button>
+                                <br>
+                                <label class="form-label fw-bold">Trailer (external)</label><br>
+                                <input type="text" name="file1" id="file1" class="form-control" placeholder="Add trailer URL for an external source" />
+                            </div>
+                            <div class="col-sm-12 p-4">
+                                <button type="submit" class="btn btn-primary p-4">
+                                    <i class="fa fa-plus fa-lg"></i> <b>Add a trailer from an external source - Step 2</b>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+
+
+
         @elseif(session::get('stage') == 3)
 
-            <!-- STEP 3 - Add the main feature (compulsory) -->
+            <!-- STEP 3 - Add the main feature -->
             <div class="col-12 col-sm-12 mt-4">
                 <div class="card p-4" style="background: #eee;">
                     <h3 class="p-4">Step 3 - Add the main feature video or audio file</h3>
@@ -119,27 +151,27 @@
                         <div class="row p-4">
                             <div class="col-sm-12 col-md-6">
                                 <label class="form-label fw-bold">Feature *</label><br>
-                                <input type="file" name="feature" class="form-control" placeholder="Add the main feature" required />
+                                <input type="file" name="feature" id="feature" class="form-control" placeholder="Add the main feature" required />
                             </div>
                             <div class="col-sm-12 p-4">
-                                <button type="submit" class="btn btn-primary p-4">
+                            <button type="submit" onclick="uploadFileMain()" class="btn btn-primary p-4">
                                     <i class="fa fa-plus fa-lg"></i> <b>Add the main feature - Step 3</b>
                                 </button>
                                 <br>Progress:<br>
-                                <progress id="progressBar" value="0" max="100" style="width:100%;"></progress>
-                                <h3 id="status"></h3>
-                                <p id="loaded_n_total"></p>
+                                <progress id="progressBarMain" value="0" max="100" style="width:100%;"></progress>
+                                <h3 id="statusMain"></h3>
+                                <p id="loaded_n_totalMain"></p>
                             </div>
                         </div>
                         <script>
-                            function uploadFile() {
-                            var file = document.getElementById("feature").files[0];
-                            var formdata = new FormData();
-                            formdata.append("feature", file);
+                            function uploadFileMain() {
+                            var file2 = document.getElementById("feature").files[0];
+                            var formdata2 = new FormData();
+                            formdata2.append("feature", file2);
                             var ajax = new XMLHttpRequest();
-                            ajax.upload.addEventListener("progress", progressHandler, false);
+                            ajax.upload.addEventListener("progress", progressHandlerMain, false);
                             ajax.open("POST", "{{route('store.s3')}}");
-                            ajax.send(formdata);
+                            ajax.send(formdata2);
                                 $.ajaxSetup({
                                 headers: {
                                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -147,19 +179,46 @@
                             });
                             }
 
-                            function progressHandler(event) {
-                                document.getElementById("loaded_n_total").innerHTML = "Uploaded " + event.loaded + " bytes of " + event.total;
-                            var percent = (event.loaded / event.total) * 100;
-                            document.getElementById("progressBar").value = Math.round(percent);
-                            document.getElementById("status").innerHTML = Math.round(percent) + "% uploaded... please wait";
-                                // if(Math.round(percent) == 100){
-                                //     document.getElementById("trailer_form").submit();
-                                // }
+                            function progressHandlerMain(evt) {
+                                document.getElementById("loaded_n_totalMain").innerHTML = "Uploaded " + evt.loaded + " bytes of " + evt.total;
+                            var perc = (evt.loaded / evt.total) * 100;
+                            document.getElementById("progressBarMain").value = Math.round(perc);
+                            document.getElementById("statusMain").innerHTML = Math.round(perc) + "% uploaded... please wait";
                             }
                         </script>
                     </form>
                 </div>
             </div>
+
+
+
+            <div class="col-sm-12"><hr></div>
+
+
+
+            <!-- STEP 3 - Add the main feature from an external source -->
+            <div class="col-12 col-sm-12 mt-4">
+                <div class="card p-4" style="background: #eee;">
+                    <h3 class="p-4">Step 3 (external) - Add the main feature video or audio file from an external source</h3>
+                    <form action="{{route('store.s3e')}}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <div class="row p-4">
+                            <div class="col-sm-12 col-md-6">
+                                <label class="form-label fw-bold">Feature *</label><br>
+                                <input type="text" name="feature" class="form-control" placeholder="Add the main feature URL" required />
+                            </div>
+                            <div class="col-sm-12 p-4">
+                                <button type="submit" class="btn btn-primary p-4">
+                                    <i class="fa fa-plus fa-lg"></i> <b>Add the main from external source - Step 3</b>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+
 
         @elseif(session::get('stage') == 4)
 

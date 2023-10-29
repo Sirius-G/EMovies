@@ -3,6 +3,6 @@
 
 @section('content')
 
-    @include('inc.moviePlayer')
+    @include('inc.trailerPlayer')
 
 @endsection

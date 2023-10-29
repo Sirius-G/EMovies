@@ -3,12 +3,12 @@
         <div class="col-12 pt-2">
             <h3 class="mb-3 text-white">Other things to watch</h3>
         </div>
-        <div id="other" class="carousel2 slide" data-bs-ride="carousel">
+        <div id="other" class="carousel2 slide" data-bs-touch="false" data-bs-interval="false">
             <div class="carousel-inner" role="listbox">
                 @if(count($thumbs)>0)
                 @foreach($thumbs as $t)
                     <div class="carousel-item @if($loop->first) active @endif" style="border: solid #333 2px;">
-                        <div class="col-12 col-sm-12 col-md-3 col-lg-2">
+                        <div class="col-6 col-xs-6 col-sm-4 col-md-3 col-lg-2">
                             <div class="card feature_card">
                                 <a href="/more_info/{{$t->id}}" title="{{$t->title}}" alt="{{$t->title}}">
                                     <div class="card-img">
@@ -16,7 +16,7 @@
                                     </div>
                                     <div class="card-img-overlay text-white">
                                         <h5 class="card-title" style="border-bottom: solid 1px #aaa;">{{$t->title}}</h5>
-                                        <p class="card-text" style="margin-top: -8px;">{{$t->short_description}}</p>
+                                        <!-- <p class="card-text" style="margin-top: -8px;">{{$t->short_description}}</p> -->
                                     </div>
                                 </a>
                             </div>
@@ -27,10 +27,10 @@
             </div>     
                
             <div class="col-12 d-flex justify-content-between bt_top">
-                <a class="btn btn-primary" class="carousel-control-prev" onclick="advance()" href="#other" role="button" data-bs-target="#other" data-bs-slide="prev">
+                <a class="btn btn-primary" class="carousel-control-prev" onclick="advance()" role="button" data-bs-target="#other" data-bs-slide="prev">
                     <i class="fa fa-arrow-left"></i>
                 </a>
-                <a class="btn btn-primary" class="carousel-control-next" onclick="back()" href="#other" role="button" data-bs-target="#other" data-bs-slide="next">
+                <a class="btn btn-primary" class="carousel-control-next" onclick="back()" role="button" data-bs-target="#other" data-bs-slide="next">
                     <i class="fa fa-arrow-right"></i>
                 </a>
             </div>

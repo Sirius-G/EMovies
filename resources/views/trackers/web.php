@@ -19,7 +19,6 @@ Route::get('/', [App\Http\Controllers\SpringboardController::class, 'welcome']);
 Route::get('/', [App\Http\Controllers\SpringboardController::class, 'index'])->name('home');
 Route::get('/play/{id}', [App\Http\Controllers\SpringboardController::class, 'playView'])->name('play');
 Route::get('/more_info/{id}', [App\Http\Controllers\SpringboardController::class, 'moreInfo'])->name('more_info');
-Route::get('/playtrailer/{id}', [App\Http\Controllers\SpringboardController::class, 'playTrailer'])->name('playtrailer');
 
 
 //Admin Routes
@@ -30,9 +29,7 @@ Route::get('/add', [App\Http\Controllers\AdminController::class, 'create'])->nam
 
 Route::post('/store_s1', [App\Http\Controllers\AdminController::class, 'store_s1'])->name('store.s1');
 Route::post('/store_s2', [App\Http\Controllers\AdminController::class, 'store_s2'])->name('store.s2');
-Route::post('/store_s2e', [App\Http\Controllers\AdminController::class, 'store_s2e'])->name('store.s2e');
 Route::post('/store_s3', [App\Http\Controllers\AdminController::class, 'store_s3'])->name('store.s3');
-Route::post('/store_s3e', [App\Http\Controllers\AdminController::class, 'store_s3e'])->name('store.s3e');
 Route::post('/store_s4', [App\Http\Controllers\AdminController::class, 'store_s4'])->name('store.s4');
 Route::post('/store_s5', [App\Http\Controllers\AdminController::class, 'store_s5'])->name('store.s5');
 
@@ -49,22 +46,14 @@ Route::post('/skip', [App\Http\Controllers\AdminController::class, 'skip'])->nam
 Route::get('/view_all', [App\Http\Controllers\AdminController::class, 'show_all'])->name('show_all');
 Route::post('/billboard_show', [App\Http\Controllers\AdminController::class, 'billboardShow'])->name('billboard.show');
 
-route::get('watchers', [App\Http\Controllers\SpringboardController::class, 'watchers'])->name('inc.watchers');
-// route::get('drama', [App\Http\Controllers\SpringboardController::class, 'drama'])->name('inc.drama');
-// route::get('action', [App\Http\Controllers\SpringboardController::class, 'action'])->name('inc.action');
-// route::get('crime_thriller', [App\Http\Controllers\SpringboardController::class, 'crime_thriller'])->name('inc.crime_thriller');
-// route::get('comedy', [App\Http\Controllers\SpringboardController::class, 'comedy'])->name('inc.comedy');
-// route::get('scifi', [App\Http\Controllers\SpringboardController::class, 'scifi'])->name('inc.scifi');
-// route::get('faith_family', [App\Http\Controllers\SpringboardController::class, 'faith_family'])->name('inc.faith_family');
-// route::get('horror', [App\Http\Controllers\SpringboardController::class, 'horror'])->name('inc.horror');
-// route::get('romance', [App\Http\Controllers\SpringboardController::class, 'romance'])->name('inc.romance');
-// route::get('classical', [App\Http\Controllers\SpringboardController::class, 'classical'])->name('inc.classical');
-
-
-route::get('thumbnails/{id}', [App\Http\Controllers\SpringboardController::class, 'thumbnails'])->name('inc.thumbnails');
-route::get('thumbnails_series/{id}', [App\Http\Controllers\SpringboardController::class, 'thumbnails_series'])->name('inc.series_link');
 
 //Tracker routes
 Route::get('/tracker_update', function () {
     return view('trackers.tracker_update');
+});
+Route::get('/tracker_data', function () {
+    return view('trackers.tracker_data');
+});
+Route::get('/tracker_check', function () {
+    return view('trackers.tracker_check');
 });
